@@ -1,0 +1,26 @@
+﻿name: Trigger private ML Reports
+
+on:
+  schedule:
+    # Вторник 06:00 МСК = 03:00 UTC
+    - cron: "0 3 * * 2"
+    # Разовый тест: 04.08.2026 18:05 МСК = 15:05 UTC
+    - cron: "5 15 4 8 *"
+  workflow_dispatch:
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger sheykink-glitch/ml-reports
+        env:
+          GH_TOKEN: ${{ secrets.DISPATCH_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "Secret DISPATCH_TOKEN is empty" >&2
+            exit 1
+          fi
+          echo "Dispatching weekly-reports.yml on sheykink-glitch/ml-reports ..."
+          gh workflow run weekly-reports.yml --repo sheykink-glitch/ml-reports
+          echo "Done. Check: https://github.com/sheykink-glitch/ml-reports/actions"
