@@ -4,6 +4,8 @@ on:
   schedule:
   # Вторник 06:00 МСК = 03:00 UTC
   - cron: "0 3 * * 2"
+  # Разовый тест: 05.08.2026 11:40 МСК = 08:40 UTC
+  - cron: "40 8 5 8 *"
   workflow_dispatch:
 
 jobs:
