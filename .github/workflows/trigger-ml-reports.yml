@@ -2,8 +2,8 @@
 
 on:
   schedule:
-    # Тест: каждая минута (dispatch сработает только на нужной минуте в job)
-    - cron: "* * * * *"
+    # Вторник 06:00 МСК = 03:00 UTC
+    - cron: "0 3 * * 2"
   workflow_dispatch:
 
 jobs:
@@ -18,11 +18,6 @@ jobs:
           if [ -z "${GH_TOKEN:-}" ]; then
             echo "Secret DISPATCH_TOKEN is empty" >&2
             exit 1
-          fi
-          minute=$(date -u +%M)
-          if [ "$minute" != "17" ]; then
-            echo "Skip dispatch: minute mismatch (expected 17, got $minute)."
-            exit 0
           fi
           echo "Dispatching weekly-reports.yml on sheykink-glitch/ml-reports ..."
           gh workflow run weekly-reports.yml --repo sheykink-glitch/ml-reports
