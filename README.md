@@ -6,3 +6,7 @@ This **public** repo runs the cron and calls `workflow_dispatch` on `sheykink-gl
 ## Secret
 
 Set Actions secret `DISPATCH_TOKEN` to a classic PAT / fine-grained token with access to private repo `ml-reports` (`actions: write` / `workflow`).
+
+## Inactivity
+
+GitHub disables `on.schedule` in a public repository after 60 days without a commit (`disabled_inactivity`). Workflow `keepalive.yml` commits every Monday so the Tuesday trigger stays enabled.

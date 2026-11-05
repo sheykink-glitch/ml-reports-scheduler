@@ -1,5 +1,8 @@
 ﻿name: Trigger private ML Reports
 
+# Не удалять keepalive.yml: без еженедельного коммита GitHub гасит этот cron
+# через 60 дней простоя (disabled_inactivity).
+
 on:
   schedule:
     # Вторник 06:00 МСК = 03:00 UTC
