@@ -1,0 +1,24 @@
+name: Trigger daily ML link report
+
+on:
+  schedule:
+    # Каждый день 09:00 МСК = 06:00 UTC.
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger daily report in private repository
+        env:
+          GH_TOKEN: ${{ secrets.DISPATCH_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "Secret DISPATCH_TOKEN is empty" >&2
+            exit 1
+          fi
+          gh workflow run daily-ml-links.yml \
+            --repo sheykink-glitch/ml-reports
+          echo "Daily ML link report dispatched."
